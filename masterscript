@@ -1,0 +1,70 @@
+#!/bin/bash
+
+
+# ----------------------------------
+# Define variables
+# ----------------------------------
+
+# Colors name
+COLOR_BLACK="\033[0;30m"
+COLOR_RED="\033[0;31m"
+COLOR_YELLOW="\033[0;33m"
+COLOR_GREEN="\033[0;32m"
+COLOR_RESET="\033[0m"
+
+# ----------------------------------
+# Function
+# ----------------------------------
+
+pause(){
+  read -p "Press [Enter] key to continue..." fackEnterKey
+}
+
+
+upgradeAndClean(){
+  sudo apt-get update
+  sudo apt-get upgrade
+  sudo apt-get dist-upgrade
+  sudo apt-get autoclean
+  sudo apt-get autoremove
+
+  pause
+}
+
+# Menu headlines
+SYSTEM_MAINTENANCE="${COLOR_GREEN}SYSTEM MAINTENANCE${COLOR_RESET}"
+PLACEHOLDER="${COLOR_GREEN}SOMETHING ELSE${COLOR_RESET}"
+
+show_menu(){
+  clear
+  echo    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+	echo    "          MASTERSCRIPT          "
+	echo    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+  echo -e "${SYSTEM_MAINTENANCE}"
+  echo    "1. Upgrade And Clean System"
+  echo    ""
+  echo -e "${PLACEHOLDER}"
+  echo    "2. Help"
+  echo    "3. Exit"
+  echo    ""
+}
+
+read_options(){
+  local choice
+	read -p "Enter choice: " choice
+	case $choice in
+		1) upgradeAndClean ;;
+    2) exit 0;;
+		*) echo -e "${COLOR_RED}Error:${COLOR_RESET} invalid input" && sleep 2
+	esac
+}
+
+
+# -----------------------------------
+# Main logic - infinite loop
+# ------------------------------------
+while true
+do
+	show_menu
+	read_options
+done

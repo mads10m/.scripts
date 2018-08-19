@@ -1,0 +1,13 @@
+#!/bin/bash
+
+SCRIPT_FOLDER="$HOME/.scripts"
+SCRIPT_FILE="$SCRIPT_FOLDER/$1"
+EDITOR="atom"
+
+if [[ -f $SCRIPT_FILE ]]; then
+  echo sorry $1 already exist
+else
+  echo '#!/bin/bash' > $SCRIPT_FILE
+  chmod +x $SCRIPT_FILE
+  sudo $EDITOR $SCRIPT_FILE
+fi
