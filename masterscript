@@ -28,11 +28,31 @@ upgradeAndClean(){
   sudo apt-get autoclean
   sudo apt-get autoremove
 
+  # Test if a reboot is needed
+  if [ -f /var/run/reboot-required ]; then
+      echo -e $COLOR_RED'Reboot required!'$COLOR_RESET
+  fi
+
+  pause
+}
+
+REPOSITORIES_LIST=(
+  ".dotfiles"
+  ".scripts"
+)
+
+updateRepositories(){
+  # TODO test if 'git pull' failes
+  for i in "${REPOSITORIES_LIST[@]}"; do
+    (cd ~/$i/ && git pull origin master)
+  done
+
   pause
 }
 
 # Menu headlines
 SYSTEM_MAINTENANCE="${COLOR_GREEN}SYSTEM MAINTENANCE${COLOR_RESET}"
+BUNDLES="${COLOR_GREEN}BUNDLES${COLOR_RESET}"
 PLACEHOLDER="${COLOR_GREEN}SOMETHING ELSE${COLOR_RESET}"
 
 show_menu(){
@@ -41,11 +61,17 @@ show_menu(){
 	echo    "          MASTERSCRIPT          "
 	echo    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
   echo -e "${SYSTEM_MAINTENANCE}"
-  echo    "1. Upgrade And Clean System"
+  echo    "1. Clean And Upgrade System"
+  echo    "2. Update My Repositories"
+  echo    ""
+  echo -e "${BUNDLES}"
+  echo    "3. (1 and 2)"
+  echo    " - Clean And Upgrade System"
+  echo    " - Update My Repositories  "
   echo    ""
   echo -e "${PLACEHOLDER}"
-  echo    "2. Help"
-  echo    "3. Exit"
+  echo    "4. Help"
+  echo    "5. Exit"
   echo    ""
 }
 
@@ -54,7 +80,10 @@ read_options(){
 	read -p "Enter choice: " choice
 	case $choice in
 		1) upgradeAndClean ;;
-    2) exit 0;;
+    2) updateRepositories;;
+    3) ;;
+    4) echo -e "${COLOR_YELLOW}Help not written yet${COLOR_RESET}" && sleep 2;;
+    5) exit 0;;
 		*) echo -e "${COLOR_RED}Error:${COLOR_RESET} invalid input" && sleep 2
 	esac
 }
