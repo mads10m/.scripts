@@ -58,8 +58,8 @@ PLACEHOLDER="${COLOR_GREEN}SOMETHING ELSE${COLOR_RESET}"
 show_menu(){
   clear
   echo    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-	echo    "          MASTERSCRIPT          "
-	echo    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+  echo    "          MASTERSCRIPT          "
+  echo    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
   echo -e "${SYSTEM_MAINTENANCE}"
   echo    "1. Clean And Upgrade System"
   echo    "2. Update My Repositories"
