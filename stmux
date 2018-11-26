@@ -1,13 +1,26 @@
 #!/bin/bash
 
+tmux start-server
+tmux source-file ~/.tmux.conf
+
 SESSIONNAME="main"
 tmux has-session -t $SESSIONNAME &> /dev/null
 
 if [ $? != 0 ]
- then
-    tmux new-session -s $SESSIONNAME -n masterscript -d
-    tmux send-keys -t $SESSIONNAME "masterscript" C-m
-    tmux new -s $SESSIONNAME -n mywindow
+then
+	tmux new-session -d -s $SESSIONNAME
+	tmux new-window -t $SESSIONNAME:1 -n htop
+	tmux new-window -t $SESSIONNAME:2 -n dev
+	tmux new-window -t $SESSIONNAME:3 -n dotfiles
+	tmux new-window -t $SESSIONNAME:4 -n masterscript
+    
+	
+	tmux send-keys -t $SESSIONNAME:1 "htop" C-m
+    tmux send-keys -t $SESSIONNAME:2 "vim" C-m
+    tmux send-keys -t $SESSIONNAME:3 "vim" C-m
+    tmux send-keys -t $SESSIONNAME:4 "masterscript" C-m
+	
+
 fi
 
 tmux attach -t $SESSIONNAME
