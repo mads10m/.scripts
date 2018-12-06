@@ -9,18 +9,56 @@ tmux has-session -t $SESSIONNAME &> /dev/null
 if [ $? != 0 ]
 then
 	tmux new-session -d -s $SESSIONNAME
-	tmux new-window -t $SESSIONNAME:1 -n htop
-	tmux new-window -t $SESSIONNAME:2 -n dev
-	tmux new-window -t $SESSIONNAME:3 -n dotfiles
-	tmux new-window -t $SESSIONNAME:4 -n masterscript
-    
-	
-	tmux send-keys -t $SESSIONNAME:1 "htop" C-m
-    tmux send-keys -t $SESSIONNAME:2 "vim" C-m
-    tmux send-keys -t $SESSIONNAME:3 "vim" C-m
-    tmux send-keys -t $SESSIONNAME:4 "masterscript" C-m
-	
 
+	# htop
+	tmux new-window -t $SESSIONNAME:1 -n htop
+	#################################################
+
+	tmux send-keys -t $SESSIONNAME:1 "htop" C-m
+
+
+	# dev
+	tmux new-window -t $SESSIONNAME:2 -n dev
+	#################################################
+
+	# vim
+	tmux rename-window 'vim'
+	tmux select-window -t vim:0 
+	tmux send-keys -t $SESSIONNAME:2 "cd .save/ && vim" C-m
+
+	# right terminal
+	tmux split-window -t 0 -h 
+	tmux resize-pane -x 50
+    tmux send-keys -t $SESSIONNAME:2 "cd .save/" C-m
+	tmux send-keys -t $SESSIONNAME:2 C-l
+
+	# button terminal
+	tmux split-window -t 0 -v
+	tmux resize-pane -y 5
+    tmux send-keys -t $SESSIONNAME:2 "cd .save/" C-m
+	tmux send-keys -t $SESSIONNAME:2 C-l
+
+	# select vim pane
+	tmux select-pane -t 0
+
+
+	# dotfiles
+	tmux new-window -t $SESSIONNAME:3 -n dotfiles
+	#################################################
+
+    tmux send-keys -t $SESSIONNAME:3 "vim .vimrc" C-m
+    tmux send-keys -t $SESSIONNAME:3 ":tabedit .bashrc" C-m
+    tmux send-keys -t $SESSIONNAME:3 ":tabedit .tmux.conf" C-m
+    tmux send-keys -t $SESSIONNAME:3 ":vsplit ./scripts/stmux" C-m
+
+
+	# masterscript
+	tmux new-window -t $SESSIONNAME:4 -n masterscript
+	#################################################
+    
+    tmux send-keys -t $SESSIONNAME:4 "masterscript" C-m
+
+	
 fi
 
 tmux attach -t $SESSIONNAME
