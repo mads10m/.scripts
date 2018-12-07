@@ -49,7 +49,7 @@ then
     tmux send-keys -t $SESSIONNAME:3 "vim .vimrc" C-m
     tmux send-keys -t $SESSIONNAME:3 ":tabedit .bashrc" C-m
     tmux send-keys -t $SESSIONNAME:3 ":tabedit .tmux.conf" C-m
-    tmux send-keys -t $SESSIONNAME:3 ":vsplit ./scripts/stmux" C-m
+    tmux send-keys -t $SESSIONNAME:3 ":vsplit ~/.scripts/stmux" C-m
 
 
 	# masterscript
