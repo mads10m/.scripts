@@ -22,9 +22,9 @@ then
 	#################################################
 
 	# vim
-	tmux rename-window 'vim'
+	tmux rename-window 'dev'
 	tmux select-window -t vim:0 
-	tmux send-keys -t $SESSIONNAME:2 "cd .save/ && vim" C-m
+	tmux send-keys -t $SESSIONNAME:2 "cd .save/" C-m
 
 	# right terminal
 	tmux split-window -t 0 -h 
