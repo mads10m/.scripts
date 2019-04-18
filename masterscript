@@ -40,12 +40,16 @@ REPOSITORIES_LIST=(
 ".dotfiles"
 ".scripts"
 ".vim"
+".fzf"
 )
 
 updateRepositories(){
 	# TODO test if 'git pull' failes
 	for i in "${REPOSITORIES_LIST[@]}"; do
 		(cd ~/$i/ && git pull origin master)
+		if [[ "$i" == *".fzf"* ]]; then
+			~/.fzf/install
+		fi
 	done
 
 	pause
