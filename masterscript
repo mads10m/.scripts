@@ -39,6 +39,7 @@ upgradeAndClean(){
 REPOSITORIES_LIST=(
 ".dotfiles"
 ".scripts"
+".vim"
 )
 
 updateRepositories(){
@@ -82,10 +83,10 @@ read_options(){
 	case $choice in
 		1) upgradeAndClean ;;
 		2) updateRepositories;;
-		3) (cd google-drive/ && grive && pause);;
-		3) ;;
-		4) echo -e "${COLOR_YELLOW}Help not written yet${COLOR_RESET}" && sleep 2;;
-		5) exit 0;;
+		3) (cd ~/google-drive/ && grive && pause);;
+		4) upgradeAndClean && updateRepositories;;
+		5) echo -e "${COLOR_YELLOW}Help not written yet${COLOR_RESET}" && sleep 2;;
+		6) exit 0;;
 		*) echo -e "${COLOR_RED}Error:${COLOR_RESET} invalid input" && sleep 2
 	esac
 }
