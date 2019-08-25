@@ -40,6 +40,7 @@ REPOSITORIES_LIST=(
 ".dotfiles"
 ".scripts"
 ".vim"
+"Templates"
 ".fzf"
 )
 

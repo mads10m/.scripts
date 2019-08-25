@@ -1,0 +1,8 @@
+#!/bin/bash
+
+for d in ~/Templates/* ; do
+	if [ -d "$d" ]; then
+		echo " -${[d]} ${d##*/}"
+	fi
+done
+#cp -R ~/Templates/math-homework/* .
