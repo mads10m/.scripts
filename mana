@@ -1,0 +1,2 @@
+#!/bin/bash
+man -k . | fzf | awk '{print $1}' | xargs -r man -T pdf > /tmp/man.pdf; xdg-open /tmp/man.pdf
