@@ -6,6 +6,9 @@ tmux source-file ~/.tmux.conf
 SESSIONNAME="main"
 tmux has-session -t $SESSIONNAME &> /dev/null
 
+# send keys to specifk panes
+# https://superuser.com/questions/492266/run-or-send-a-command-to-a-tmux-pane-in-a-running-tmux-session
+
 if [ $? != 0 ]
 then
 	tmux new-session -d -s $SESSIONNAME
@@ -15,6 +18,11 @@ then
 	#################################################
 
 	tmux send-keys -t $SESSIONNAME:1 "htop" C-m
+	tmux split-window -t $SESSIONNAME:1 -h
+	tmux send-keys -t $SESSIONNAME:1.2 C-z "tmux resize-pane -x 79" Enter
+	tmux send-keys -t $SESSIONNAME:1 "watch -n 2 nvidia-smi" C-m
+	tmux split-window -t $SESSIONNAME:1 -v
+	tmux send-keys -t $SESSIONNAME:1 "watch -n 2 sensors" C-m
 
 
 	# dev
