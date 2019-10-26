@@ -1,0 +1,16 @@
+#!/bin/bash
+current_dir=$PWD
+tampleate_dir=~/Templates
+
+printf "Please select type:\n"
+select t in $(ls $tampleate_dir -D); do test -n "$t" && break; echo ">>> Invalid Selection"; done
+
+type_dir=$tampleate_dir/$t
+
+printf "Please select folder to copy:\n"
+select d in $(ls $type_dir -D); do test -n "$d" && break; echo ">>> Invalid Selection"; done
+
+selected_dir=$type_dir/$d
+
+cd $selected_dir && cp -r $selected_dir/* $current_dir
+#cd $selected_dir && pwd
