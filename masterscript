@@ -45,11 +45,16 @@ REPOSITORIES_LIST=(
 )
 
 updateRepositories(){
-	# TODO test if 'git pull' failes
+	# TODO test if 'git pull' fails
 	for i in "${REPOSITORIES_LIST[@]}"; do
-		(cd ~/$i/ && git pull origin master)
-		if [[ "$i" == *".fzf"* ]]; then
-			~/.fzf/install
+		echo "Checking $i"
+		cd ~/$i/ && git fetch
+		if [[ $(git status | grep -o 'Your branch is up to date') != 'Your branch is up to date' ]]; then
+			echo "Updating $i"
+			git pull
+			if [[ "$i" == *".fzf" ]]; then
+				~/.fzf/install
+			fi
 		fi
 	done
 
