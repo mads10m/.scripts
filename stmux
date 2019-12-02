@@ -19,7 +19,7 @@ then
 
 	tmux send-keys -t $SESSIONNAME:1 "htop" C-m
 	tmux split-window -t $SESSIONNAME:1 -h
-	tmux send-keys -t $SESSIONNAME:1 "sleep 5" Enter "tmux resize-pane -x 79 && watch -n 2 nvidia-smi" C-m
+	tmux send-keys -t $SESSIONNAME:1 "tmux resize-pane -t $SESSIONNAME:1 -x 79 && watch -n 2 nvidia-smi" C-m
 	#tmux send-keys -t $SESSIONNAME:1.2 "tmux resize-pane -x 79" C-m
 	#tmux send-keys -t $SESSIONNAME:1.2 "watch -n 2 nvidia-smi" C-m
 	tmux split-window -t $SESSIONNAME:1 -v
