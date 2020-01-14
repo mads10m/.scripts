@@ -37,11 +37,12 @@ upgradeAndClean(){
 }
 
 REPOSITORIES_LIST=(
-".dotfiles"
-".scripts"
-".vim"
-"Templates"
-".fzf"
+	".dotfiles"
+	".scripts"
+	".vim"
+	"Templates"
+	".fzf"
+	"vim"
 )
 
 updateRepositories(){
@@ -51,9 +52,20 @@ updateRepositories(){
 		cd ~/$i/ && git fetch
 		if [[ $(git status | grep -o 'Your branch is up to date') != 'Your branch is up to date' ]]; then
 			echo "Updating $i"
+			echo ""
 			git pull
+
+			# Update fzf
 			if [[ "$i" == *".fzf" ]]; then
 				~/.fzf/install
+			fi
+
+			# Update and compile vim
+			if [[ "$i" == "vim" ]]; then
+				sudo make uninstall
+				./configure --with-features=huge --enable-multibyte --enable-rubyinterp=yes --enable-python3interp=yes --with-python3-config-dir=$(python3-config --configdir) --enable-perlinterp=yes --enable-luainterp=yes --enable-gui=gtk2 --enable-cscope --prefix=/usr/local
+				make VIMRUNTIMEDIR=/usr/local/share/vim/vim82
+				sudo make install
 			fi
 		fi
 	done
