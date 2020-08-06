@@ -42,7 +42,7 @@ REPOSITORIES_LIST=(
 	".vim"
 	"Templates"
 	".fzf"
-	"vim"
+	#"vim"
 )
 
 updateRepositories(){
@@ -61,13 +61,13 @@ updateRepositories(){
 			fi
 
 			# Update and compile vim
-			if [[ "$i" == "vim" ]]; then
-				sudo make uninstall
-				make distclean
-				./configure --with-features=huge --enable-multibyte --enable-rubyinterp=yes --enable-python3interp=yes --with-python3-config-dir=$(python3-config --configdir) --with-python-command=/usr/bin/python3 --enable-perlinterp=yes --enable-luainterp=yes --enable-gui=gtk2 --enable-cscope --prefix=/usr/local
-				make VIMRUNTIMEDIR=/usr/local/share/vim/vim82
-				sudo make install
-			fi
+			#if [[ "$i" == "vim" ]]; then
+			#	sudo make uninstall
+			#	make distclean
+			#	./configure --with-features=huge --enable-multibyte --enable-rubyinterp=yes --enable-python3interp=yes --with-python3-config-dir=$(python3-config --configdir) --with-python-command=/usr/bin/python3 --enable-perlinterp=yes --enable-luainterp=yes --enable-gui=auto --enable-cscope --prefix=/usr/local
+			#	make VIMRUNTIMEDIR=/usr/local/share/vim/vim82
+			#	sudo make install
+			#fi
 		fi
 	done
 
