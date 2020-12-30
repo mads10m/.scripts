@@ -64,7 +64,8 @@ updateRepositories(){
 			if [[ "$i" == "vim" ]]; then
 				sudo make uninstall
 				make distclean
-				./configure --prefix=/usr/local --disable-darwin --enable-luainterp=yes --with-lua-prefix=/usr/include/lua5.1 --enable-perlinterp=yes --enable-python3interp=yes --enable-pythoninterp=yes --enable-tclinterp=yes -enable-rubyinterp=yes --enable-cscope --enable-terminal --enable-multibyte --enable-xim --enable-fontset --enable-gui=auto --with-features=huge --with-x
+				./configure --prefix=/usr/local --disable-darwin --enable-luainterp=yes --with-lua-prefix=/usr/include/lua5.1 --enable-perlinterp=yes --enable-python3interp=yes --enable-pythoninterp=yes --enable-tclinterp=yes -enable-rubyinterp=yes --enable-cscope --enable-terminal --enable-multibyte --enable-xim --enable-fontset --enable-gui=gtk3 --with-features=huge --with-x
+				#./configure --prefix=/usr/local --disable-darwin --enable-luainterp=yes --with-lua-prefix=/usr/include/lua5.1 --enable-perlinterp=yes --enable-python3interp=yes --enable-pythoninterp=yes --enable-tclinterp=yes -enable-rubyinterp=yes --enable-cscope --enable-terminal --enable-multibyte --enable-xim --enable-fontset --enable-gui=auto --with-features=huge --with-x
 				sudo make VIMRUNTIMEDIR=/usr/local/share/vim/vim82
 				sudo make install
 			#	sudo make uninstall
