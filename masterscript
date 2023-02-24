@@ -78,6 +78,7 @@ updateRepositories(){
 
 			# Update and compile neovim
 			if [[ "$i" == "nvim" ]]; then
+				make distclean
 				make CMAKE_BUILD_TYPE=Release
 				sudo make install
 			fi
