@@ -44,6 +44,7 @@ REPOSITORIES_LIST=(
 	".fzf"
 	"vim"
 	"nvim"
+	"grive2"
 )
 
 updateRepositories(){
@@ -79,7 +80,17 @@ updateRepositories(){
 			# Update and compile neovim
 			if [[ "$i" == "nvim" ]]; then
 				make distclean
-				make CMAKE_BUILD_TYPE=Release
+				make CMAKE_BUILD_TYPE=RelWithDebInfo
+				# Create deb package to make it easier to uninstall
+				cd ~/nvim/build && cpack -G DEB && sudo dpkg -i nvim-linux64.deb
+			fi
+
+			# Update grive
+			# https://yourcmc.ru/wiki/Grive2#Installation
+			if [[ "$i" == "grive2" ]]; then
+				cd ~/grive2/build
+				cmake ..
+				make -j4
 				sudo make install
 			fi
 		fi
