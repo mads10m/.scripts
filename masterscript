@@ -39,10 +39,10 @@ upgradeAndClean(){
 REPOSITORIES_LIST=(
 	".dotfiles"
 	".scripts"
-	".vim"
+	#".vim"
 	"Templates"
 	".fzf"
-	"vim"
+	#"vim"
 	"nvim"
 	"grive2"
 )
@@ -62,20 +62,20 @@ updateRepositories(){
 				~/.fzf/install
 			fi
 
-			# Update and compile vim
-			if [[ "$i" == "vim" ]]; then
-				sudo make uninstall
-				make distclean
-				./configure --prefix=/usr/local --disable-darwin --enable-luainterp=yes --with-lua-prefix=/usr/include/lua5.1 --enable-perlinterp=yes --enable-python3interp=yes --enable-python3interp=yes --enable-tclinterp=yes -enable-rubyinterp=yes --enable-cscope --enable-terminal --enable-multibyte --enable-xim --enable-fontset --enable-gui=gtk3 --with-features=huge --with-x
-				#./configure --prefix=/usr/local --disable-darwin --enable-luainterp=yes --with-lua-prefix=/usr/include/lua5.1 --enable-perlinterp=yes --enable-python3interp=yes --enable-pythoninterp=yes --enable-tclinterp=yes -enable-rubyinterp=yes --enable-cscope --enable-terminal --enable-multibyte --enable-xim --enable-fontset --enable-gui=auto --with-features=huge --with-x
-				sudo make VIMRUNTIMEDIR=/usr/local/share/vim/vim82
-				sudo make install
+			## Update and compile vim
+			#if [[ "$i" == "vim" ]]; then
 			#	sudo make uninstall
 			#	make distclean
-			#	./configure --with-features=huge --enable-multibyte --enable-rubyinterp=yes --enable-python3interp=yes --with-python3-config-dir=$(python3-config --configdir) --with-python-command=/usr/bin/python3 --enable-perlinterp=yes --enable-luainterp=yes --enable-gui=auto --enable-cscope --prefix=/usr/local
-			#	make VIMRUNTIMEDIR=/usr/local/share/vim/vim82
+			#	./configure --prefix=/usr/local --disable-darwin --enable-luainterp=yes --with-lua-prefix=/usr/include/lua5.1 --enable-perlinterp=yes --enable-python3interp=yes --enable-python3interp=yes --enable-tclinterp=yes -enable-rubyinterp=yes --enable-cscope --enable-terminal --enable-multibyte --enable-xim --enable-fontset --enable-gui=gtk3 --with-features=huge --with-x
+			#	#./configure --prefix=/usr/local --disable-darwin --enable-luainterp=yes --with-lua-prefix=/usr/include/lua5.1 --enable-perlinterp=yes --enable-python3interp=yes --enable-pythoninterp=yes --enable-tclinterp=yes -enable-rubyinterp=yes --enable-cscope --enable-terminal --enable-multibyte --enable-xim --enable-fontset --enable-gui=auto --with-features=huge --with-x
+			#	sudo make VIMRUNTIMEDIR=/usr/local/share/vim/vim82
 			#	sudo make install
-			fi
+			##	sudo make uninstall
+			##	make distclean
+			##	./configure --with-features=huge --enable-multibyte --enable-rubyinterp=yes --enable-python3interp=yes --with-python3-config-dir=$(python3-config --configdir) --with-python-command=/usr/bin/python3 --enable-perlinterp=yes --enable-luainterp=yes --enable-gui=auto --enable-cscope --prefix=/usr/local
+			##	make VIMRUNTIMEDIR=/usr/local/share/vim/vim82
+			##	sudo make install
+			#fi
 
 			# Update and compile neovim
 			if [[ "$i" == "nvim" ]]; then
