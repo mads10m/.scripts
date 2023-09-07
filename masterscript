@@ -88,10 +88,18 @@ updateRepositories(){
 			# Update grive
 			# https://yourcmc.ru/wiki/Grive2#Installation
 			if [[ "$i" == "grive2" ]]; then
-				cd ~/grive2/build
-				cmake ..
-				make -j4
-				sudo make install
+				read -p "Do you want to proceed compiling grive2? (y/n) " yn
+
+				case $yn in 
+					[yY] ) echo ok, we will proceed;
+						cd ~/grive2/build;
+						cmake ..;
+						make -j4;
+						sudo make install;
+						break;;
+					*) echo "aborting";
+						break;;
+				esac
 			fi
 		fi
 	done
