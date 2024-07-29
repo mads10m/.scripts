@@ -22,6 +22,9 @@ pause(){
 
 
 upgradeAndClean(){
+	echo "Updating snap packages"
+	sudo snap refresh
+	echo -e "\nUpdating apt packages"
 	sudo apt-get update
 	sudo apt-get upgrade
 	sudo apt-get dist-upgrade
