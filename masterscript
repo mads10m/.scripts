@@ -22,14 +22,15 @@ pause(){
 
 
 upgradeAndClean(){
-	echo "Updating snap packages"
-	sudo snap refresh
-	echo -e "\nUpdating apt packages"
+	echo "Updating apt packages"
 	sudo apt-get update
 	sudo apt-get upgrade
 	sudo apt-get dist-upgrade
 	sudo apt-get autoclean
 	sudo apt-get autoremove
+
+	echo -e "\nUpdating snap packages"
+	sudo snap refresh
 
 	# Test if a reboot is needed
 	if [ -f /var/run/reboot-required ]; then
