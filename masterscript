@@ -51,62 +51,83 @@ REPOSITORIES_LIST=(
 )
 
 updateRepositories(){
-	# TODO test if 'git pull' fails
+	# TODO: test if 'git pull' fails
 	for i in "${REPOSITORIES_LIST[@]}"; do
 		echo "Checking $i"
 		cd ~/$i/ && git fetch
-		if [[ $(git status | grep -o 'Your branch is up to date') != 'Your branch is up to date' ]]; then
-			echo "Updating $i"
-			echo ""
-			git pull
 
-			# Update fzf
-			if [[ "$i" == *".fzf" ]]; then
-				~/.fzf/install
-			fi
+    # updating neovim specific code
+		if [[ "$i" == "nvim" ]]; then
+      tag="stable"
+      current_hash=$(git rev-parse HEAD)
+      remote_hash=$(git ls-remote --tags --refs -q | grep $tag | cut -f1)
 
-			## Update and compile vim
-			#if [[ "$i" == "vim" ]]; then
-			#	sudo make uninstall
-			#	make distclean
-			#	./configure --prefix=/usr/local --disable-darwin --enable-luainterp=yes --with-lua-prefix=/usr/include/lua5.1 --enable-perlinterp=yes --enable-python3interp=yes --enable-python3interp=yes --enable-tclinterp=yes -enable-rubyinterp=yes --enable-cscope --enable-terminal --enable-multibyte --enable-xim --enable-fontset --enable-gui=gtk3 --with-features=huge --with-x
-			#	#./configure --prefix=/usr/local --disable-darwin --enable-luainterp=yes --with-lua-prefix=/usr/include/lua5.1 --enable-perlinterp=yes --enable-python3interp=yes --enable-pythoninterp=yes --enable-tclinterp=yes -enable-rubyinterp=yes --enable-cscope --enable-terminal --enable-multibyte --enable-xim --enable-fontset --enable-gui=auto --with-features=huge --with-x
-			#	sudo make VIMRUNTIMEDIR=/usr/local/share/vim/vim82
-			#	sudo make install
-			##	sudo make uninstall
-			##	make distclean
-			##	./configure --with-features=huge --enable-multibyte --enable-rubyinterp=yes --enable-python3interp=yes --with-python3-config-dir=$(python3-config --configdir) --with-python-command=/usr/bin/python3 --enable-perlinterp=yes --enable-luainterp=yes --enable-gui=auto --enable-cscope --prefix=/usr/local
-			##	make VIMRUNTIMEDIR=/usr/local/share/vim/vim82
-			##	sudo make install
-			#fi
+      if [[ "$current_hash" != "$remote_hash" ]]; then
+        echo "Neovim remote has updated"
+        git fetch origin --tags --force
 
-			# Update and compile neovim
-			if [[ "$i" == "nvim" ]]; then
-				make distclean
-				make CMAKE_BUILD_TYPE=RelWithDebInfo
-				# Create deb package to make it easier to uninstall
-				cd ~/nvim/build && cpack -G DEB && sudo dpkg -i nvim-linux64.deb
-			fi
+        # update code
+        make distclean
+        make CMAKE_BUILD_TYPE=RelWithDebInfo
+        # Create deb package to make it easier to uninstall
+        cd ~/nvim/build && cpack -G DEB && sudo dpkg -i nvim-linux64.deb
+      fi
 
-			# Update grive
-			# https://yourcmc.ru/wiki/Grive2#Installation
-			if [[ "$i" == "grive2" ]]; then
-				read -p "Do you want to proceed compiling grive2? (y/n) " yn
+    # update non neovim code
+		else
+			if [[ $(git status | grep -o 'Your branch is up to date') != 'Your branch is up to date' ]]; then
+				echo "Updating $i"
+				echo ""
+				git pull
 
-				case $yn in 
-					[yY] ) echo ok, we will proceed;
-						cd ~/grive2/build;
-						cmake ..;
-						make -j4;
-						sudo make install;
-						break;;
-					*) echo "aborting";
-						break;;
-				esac
+				# Update fzf
+				if [[ "$i" == *".fzf" ]]; then
+					~/.fzf/install
+				fi
+
+				## Update and compile vim
+				#if [[ "$i" == "vim" ]]; then
+				#	sudo make uninstall
+				#	make distclean
+				#	./configure --prefix=/usr/local --disable-darwin --enable-luainterp=yes --with-lua-prefix=/usr/include/lua5.1 --enable-perlinterp=yes --enable-python3interp=yes --enable-python3interp=yes --enable-tclinterp=yes -enable-rubyinterp=yes --enable-cscope --enable-terminal --enable-multibyte --enable-xim --enable-fontset --enable-gui=gtk3 --with-features=huge --with-x
+				#	#./configure --prefix=/usr/local --disable-darwin --enable-luainterp=yes --with-lua-prefix=/usr/include/lua5.1 --enable-perlinterp=yes --enable-python3interp=yes --enable-pythoninterp=yes --enable-tclinterp=yes -enable-rubyinterp=yes --enable-cscope --enable-terminal --enable-multibyte --enable-xim --enable-fontset --enable-gui=auto --with-features=huge --with-x
+				#	sudo make VIMRUNTIMEDIR=/usr/local/share/vim/vim82
+				#	sudo make install
+				##	sudo make uninstall
+				##	make distclean
+				##	./configure --with-features=huge --enable-multibyte --enable-rubyinterp=yes --enable-python3interp=yes --with-python3-config-dir=$(python3-config --configdir) --with-python-command=/usr/bin/python3 --enable-perlinterp=yes --enable-luainterp=yes --enable-gui=auto --enable-cscope --prefix=/usr/local
+				##	make VIMRUNTIMEDIR=/usr/local/share/vim/vim82
+				##	sudo make install
+				#fi
+
+				## Update and compile neovim
+				#if [[ "$i" == "nvim" ]]; then
+				#	make distclean
+				#	make CMAKE_BUILD_TYPE=RelWithDebInfo
+				#	# Create deb package to make it easier to uninstall
+				#	cd ~/nvim/build && cpack -G DEB && sudo dpkg -i nvim-linux64.deb
+				#fi
+
+				# Update grive
+				# https://yourcmc.ru/wiki/Grive2#Installation
+				if [[ "$i" == "grive2" ]]; then
+					read -p "Do you want to proceed compiling grive2? (y/n) " yn
+
+					case $yn in
+						[yY] ) echo ok, we will proceed;
+							cd ~/grive2/build;
+							cmake ..;
+							make -j4;
+							sudo make install;
+							break;;
+						*) echo "aborting";
+							break;;
+					esac
+				fi
+
 			fi
 		fi
 	done
-
 	pause
 }
 
