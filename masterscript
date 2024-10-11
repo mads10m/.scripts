@@ -65,6 +65,9 @@ updateRepositories(){
       if [[ "$current_hash" != "$remote_hash" ]]; then
         echo "Neovim remote has updated"
         git fetch origin --tags --force
+        git tag -d $tag
+        git fetch origin tag $tag
+        git checkout $tag
 
         # update code
         make distclean
