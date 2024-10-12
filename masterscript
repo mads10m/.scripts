@@ -45,8 +45,8 @@ REPOSITORIES_LIST=(
 	#".vim"
 	"Templates"
 	".fzf"
-	#"vim"
 	"nvim"
+  ".config/nvim"
 	"grive2"
 )
 
