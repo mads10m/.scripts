@@ -73,7 +73,7 @@ updateRepositories(){
         make distclean
         make CMAKE_BUILD_TYPE=RelWithDebInfo
         # Create deb package to make it easier to uninstall
-        cd ~/nvim/build && cpack -G DEB && sudo dpkg -i nvim-linux64.deb
+        cd ~/nvim/build && cpack -G DEB && sudo dpkg -i nvim-linux-x86_64.deb
       fi
 
     # update non neovim code
